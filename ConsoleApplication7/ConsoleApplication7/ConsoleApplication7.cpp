@@ -70,8 +70,12 @@ int main(){
 	cout << "Прямой код: " << result_form_1 << endl;
 
 	if (number < 0) {
-		if (size - length < 0) { rejim = 0; }
-		else { rejim = 1; result_form_2 += "1";
+		if (size - length < 0) { 
+			rejim = 0; 
+		}
+		else { 
+			rejim = 1; 
+			result_form_2 += "1";
 		}
 
 		for (int i = rejim; i < size; i++) {
