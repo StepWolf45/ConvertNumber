@@ -1,10 +1,26 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include<windows.h>
 using namespace std;
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
+string form3(const string s1, const string form_odin, int size) {
+	string result="";
+	int carry = 0;
+	for (int i = size-1; i>=0;i--)
+	{
+		int bit1 = s1.at(i) - '0';
+		int bit2 = form_odin.at(i) - '0';
+		char sum = (bit1 ^ bit2 ^ carry) + '0';
+		result = sum + result;
+		carry = (bit1 & carry) | (bit2 & carry) | (bit1 & bit2);
+	}
+	if (carry) {
+		result = "1" + result;
+	}
+	return result;
+}
 string form1(string binary, int size, int length,int number) {
 	string result_form_1 = "";
 	if (size - length > 0) {
@@ -17,13 +33,13 @@ string form1(string binary, int size, int length,int number) {
 	}
 	else if (size - length < 0) {
 		SetConsoleTextAttribute(hConsole, 12);
-		cout << "Произошло переполнение!! Некоторые элемент удалены !!" << endl;
+		cout << "Произошло переполнение!! Некоторые элементы удалены !!" << endl;
 		SetConsoleTextAttribute(hConsole, 15);
 		result_form_1 = binary.erase(0, length - size);
 	}
 	else if (size - length == 0) {
 		SetConsoleTextAttribute(hConsole, 12);
-		cout << "Произошло переполнение!! Некоторые элемент удалены !!" << endl;
+		cout << "Произошло переполнение!! Некоторые элементы удалены !!" << endl;
 		SetConsoleTextAttribute(hConsole, 15);
 		result_form_1 = binary;
 	}
@@ -87,7 +103,16 @@ int main(){
 			}
 		}
 		cout << "Обратный код: "<<result_form_2<<endl;
+		string odin = form1( "1", size, 1, 1);
+		string dop = form3(result_form_2, odin, size);
+		int length2 = dop.size();
+	    if (size - length2 < 0) {
+			dop = dop.erase(0, length2 - size);
+		}
+		cout << "Дополнительный код: " <<dop<<endl;
+
 	}
+
 	
 
 }
